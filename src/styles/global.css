@@ -23,6 +23,15 @@ main {
   background-color: yellowgreen;
 }
 
+.card {
+  width: fit-content;
+  position: relative;
+  margin: auto;
+  padding: 1rem;
+  font-size: 3rem;
+  background-color: white;
+  border-radius: 1rem;
+}
 #hud {
   display: flex;
   justify-content: space-between;
