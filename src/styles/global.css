@@ -33,6 +33,10 @@ main {
   border-radius: 1rem;
 }
 
+.card:hover {
+  cursor: pointer;
+}
+
 .card::after {
   content: "";
   width: 100%;
@@ -42,6 +46,12 @@ main {
   background-color: gray;
   border-radius: 1rem;
   backface-visibility: hidden;
+}
+
+.card.flip,
+.card.flip::after {
+  transition: transform 250ms;
+  transform: rotateY(180deg);
 }
 
 #hud {
