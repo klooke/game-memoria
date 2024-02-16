@@ -48,9 +48,14 @@ main {
   backface-visibility: hidden;
 }
 
+.card,
+.card::after {
+  transition: transform 250ms;
+  transform: rotateY(0deg);
+}
+
 .card.flip,
 .card.flip::after {
-  transition: transform 250ms;
   transform: rotateY(180deg);
 }
 
