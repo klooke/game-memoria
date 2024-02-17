@@ -72,10 +72,13 @@ function resetTime() {
 }
 
 function updateBestTime() {
-  if (game.bestTime.value > game.time.value) return;
-
-  game.bestTime.value = game.time.value;
-  game.bestTime.view.textContent = formatSecondsToTime(game.bestTime.value);
+  if (
+    game.time.value > 0 &&
+    (game.bestTime.value <= 0 || game.bestTime.value > game.time.value)
+  ) {
+    game.bestTime.value = game.time.value;
+    game.bestTime.view.textContent = formatSecondsToTime(game.bestTime.value);
+  }
 }
 
 function shuffle(array) {
