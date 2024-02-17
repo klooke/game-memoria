@@ -27,6 +27,19 @@ const game = {
   },
 };
 
+function shuffle(array) {
+  var newArray = [];
+  var length = array.length;
+
+  for (var i = 0; i < length; i++) {
+    var randIndex = Math.floor(Math.random() * array.length);
+
+    newArray.push(array.splice(randIndex, 1)[0]);
+  }
+
+  return newArray;
+}
+
 function checkMatch() {
   if (game.flipCards.length < 2) return;
 
@@ -55,7 +68,9 @@ function onCardClick(event) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  for (var card of game.cards) {
+  var cards = shuffle(game.cards);
+
+  for (var card of cards) {
     var elCard = document.createElement("div");
     elCard.className = "card";
     elCard.textContent = card;
