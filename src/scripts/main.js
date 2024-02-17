@@ -41,6 +41,14 @@ const game = {
   },
 };
 
+function playAudio(audio) {
+  audio.type = "audio/mp3";
+
+  audio.pause();
+  audio.currentTime = 0;
+  audio.play();
+}
+
 function formatSecondsToTime(seconds) {
   seconds %= 3600;
 
