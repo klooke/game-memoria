@@ -62,21 +62,23 @@ function formatSecondsToTime(seconds) {
 }
 
 function startTime() {
+  game.time.value = 0;
   game.timeMax.view.textContent = formatSecondsToTime(game.timeMax.value);
+
   game.time.id = setInterval(updateTime, 1000);
 }
 
 function updateTime() {
   game.time.value++;
-
   game.time.view.textContent = formatSecondsToTime(game.time.value);
 
-  if (game.time.value >= game.timeMax.value) clearInterval(game.time.id);
+  if (game.time.value >= game.timeMax.value) {
+    resetGame();
+  }
 }
 
-function resetTime() {
-  game.time.value = 0;
-  game.time.view.textContent = formatSecondsToTime(game.time.value);
+function stopTime() {
+  clearInterval(game.time.id);
 }
 
 function updateBestTime() {
@@ -122,8 +124,6 @@ function checkMatch() {
 
   game.matchCount++;
   game.flipCards = [];
-
-  checkWin();
 }
 
 function checkWin() {
@@ -133,14 +133,19 @@ function checkWin() {
 
   updateBestTime();
 
+  resetGame();
+}
+
+function resetGame() {
+  stopTime();
+
   var id = setTimeout(() => {
     loadCards();
-    resetTime();
+    startTime();
 
     clearTimeout(id);
   }, 5000);
 }
-
 
 function onCardClick(event) {
   var elCard = event.target;
