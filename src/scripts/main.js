@@ -22,6 +22,7 @@ const game = {
     "🦁",
   ],
   flipCards: [],
+  matchCount: 0,
   time: {
     view: document.querySelector("#time"),
     id: null,
@@ -52,6 +53,11 @@ function formatSecondsToTime(seconds) {
   return `${min}:${seg}`;
 }
 
+function startTime() {
+  game.timeMax.view.textContent = formatSecondsToTime(game.timeMax.value);
+  game.time.id = setInterval(updateTime, 1000);
+}
+
 function updateTime() {
   game.time.value++;
 
@@ -60,9 +66,9 @@ function updateTime() {
   if (game.time.value >= game.timeMax.value) clearInterval(game.time.id);
 }
 
-function startTime() {
-  game.timeMax.view.textContent = formatSecondsToTime(game.timeMax.value);
-  game.time.id = setInterval(updateTime, 1000);
+function resetTime() {
+  game.time.value = 0;
+  game.time.view.textContent = formatSecondsToTime(game.time.value);
 }
 
 function updateBestTime() {
@@ -99,8 +105,31 @@ function checkMatch() {
 
       clearTimeout(id);
     }, 500);
-  } else game.flipCards = [];
+
+    return;
+  }
+
+  game.matchCount++;
+  game.flipCards = [];
+
+  checkWin();
 }
+
+function checkWin() {
+  if (game.matchCount < game.cards.length / 2) return;
+
+  game.matchCount = 0;
+
+  updateBestTime();
+
+  var id = setTimeout(() => {
+    loadCards();
+    resetTime();
+
+    clearTimeout(id);
+  }, 5000);
+}
+
 
 function onCardClick(event) {
   var elCard = event.target;
@@ -114,7 +143,9 @@ function onCardClick(event) {
   checkMatch();
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+function loadCards() {
+  if (game.field.view.childElementCount > 0) game.field.view.innerHTML = "";
+
   var cards = shuffle(game.cards);
 
   for (var card of cards) {
@@ -126,6 +157,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
     game.field.view.appendChild(elCard);
   }
+}
 
+window.addEventListener("DOMContentLoaded", () => {
+  loadCards();
   startTime();
 });
