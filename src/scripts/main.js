@@ -1,4 +1,9 @@
 const game = {
+  audios: {
+    click: new Audio("../../res/audio/click.mp3"),
+    sucess: new Audio("../../res/audio/sucess.mp3"),
+    fail: new Audio("../../res/audio/fail.mp3"),
+  },
   cards: [
     "🙂",
     "🙂",
@@ -73,6 +78,8 @@ function updateTime() {
   game.time.view.textContent = formatSecondsToTime(game.time.value);
 
   if (game.time.value >= game.timeMax.value) {
+    playAudio(game.audios.fail);
+
     resetGame();
   }
 }
@@ -133,6 +140,8 @@ function checkWin() {
 
   updateBestTime();
 
+  playAudio(game.audios.sucess);
+
   resetGame();
 }
 
@@ -155,6 +164,8 @@ function onCardClick(event) {
   elCard.classList.add("flip");
 
   game.flipCards.push(elCard);
+
+  playAudio(game.audios.click);
 
   checkMatch();
 }
