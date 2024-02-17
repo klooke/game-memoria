@@ -74,12 +74,14 @@ function updateBestTime() {
 
 function shuffle(array) {
   var newArray = [];
-  var length = array.length;
+  var tempArray = Array.from(array);
+
+  var length = tempArray.length;
 
   for (var i = 0; i < length; i++) {
-    var randIndex = Math.floor(Math.random() * array.length);
+    var randIndex = Math.floor(Math.random() * tempArray.length);
 
-    newArray.push(array.splice(randIndex, 1)[0]);
+    newArray.push(tempArray.splice(randIndex, 1)[0]);
   }
 
   return newArray;
