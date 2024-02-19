@@ -1,8 +1,8 @@
 const game = {
   audios: {
-    click: new Audio("../../res/audio/click.mp3"),
-    sucess: new Audio("../../res/audio/sucess.mp3"),
-    fail: new Audio("../../res/audio/fail.mp3"),
+    click: new Audio("./res/audio/click.mp3"),
+    sucess: new Audio("./res/audio/sucess.mp3"),
+    fail: new Audio("./res/audio/fail.mp3"),
   },
   cards: [
     "🙂",
@@ -47,8 +47,6 @@ const game = {
 };
 
 function playAudio(audio) {
-  audio.type = "audio/mp3";
-
   audio.pause();
   audio.currentTime = 0;
   audio.play();
