@@ -69,19 +69,13 @@ function formatSecondsToTime(seconds) {
 function startTime() {
   game.time.value = 0;
   game.timeMax.view.textContent = formatSecondsToTime(game.timeMax.value);
-
   game.time.id = setInterval(updateTime, 1000);
 }
-
 function updateTime() {
   game.time.value++;
   game.time.view.textContent = formatSecondsToTime(game.time.value);
-
-  if (game.time.value >= game.timeMax.value) {
-    playAudio(game.audios.fail);
-
-    resetGame();
-  }
+  
+  checkTimeIsOver();
 }
 
 function stopTime() {
@@ -101,7 +95,6 @@ function updateBestTime() {
 function shuffle(array) {
   var newArray = [];
   var tempArray = Array.from(array);
-
   var length = tempArray.length;
 
   for (var i = 0; i < length; i++) {
@@ -120,7 +113,6 @@ function checkMatch() {
     var id = setTimeout(() => {
       game.flipCards[0].classList.remove("flip");
       game.flipCards[1].classList.remove("flip");
-
       game.flipCards = [];
 
       clearTimeout(id);
@@ -131,6 +123,8 @@ function checkMatch() {
 
   game.matchCount++;
   game.flipCards = [];
+
+  checkWin();
 }
 
 function checkWin() {
@@ -141,6 +135,16 @@ function checkWin() {
   updateBestTime();
 
   playAudio(game.audios.sucess);
+
+  resetGame();
+}
+
+function checkTimeIsOver() {
+  if (game.time.value < game.timeMax.value) return;
+
+  game.matchCount = 0;
+
+  playAudio(game.audios.fail);
 
   resetGame();
 }
@@ -179,7 +183,6 @@ function loadCards() {
     var elCard = document.createElement("div");
     elCard.className = "card";
     elCard.textContent = card;
-
     elCard.onclick = onCardClick;
 
     game.field.view.appendChild(elCard);
